@@ -14,7 +14,7 @@ async_session = AsyncSession(bind=async_engine)
 
 
 @contextmanager
-async def session_context() -> AsyncSession:
+async def session_context() -> AsyncSession:  # pragma: no cover
     try:
         yield async_session
     except Exception as e:

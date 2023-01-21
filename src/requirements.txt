@@ -79,3 +79,4 @@ responses
 safety
 ipython
 coverage
+httpx

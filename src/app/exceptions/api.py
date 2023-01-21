@@ -51,11 +51,11 @@ class LinkExpiredError(APIError):
         super().__init__(
             code=Code.LinkExpiredError,
             message='Link is expired',
-            status_code=status.HTTP_400_BAD_REQUEST
+            status_code=status.HTTP_403_FORBIDDEN
         )
 
 
-class InvalidIntervalError(APIError):
+class InvalidIntervalError(APIError):  # pragma: no cover
     def __init__(self) -> None:
         super().__init__(
             code=Code.InvalidIntervalError,

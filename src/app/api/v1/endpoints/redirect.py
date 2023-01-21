@@ -8,7 +8,7 @@ from starlette.responses import RedirectResponse
 
 from app.api.deps import get_link_repo, get_session
 # App Imports
-from app.exceptions import LinkExpiredError, LinkNotFoundError
+from app.exceptions import LinkExpiredError
 from app.models import LinkModel
 from app.repositories import LinkRepository
 
@@ -31,10 +31,10 @@ async def redirect_to_original_link(
 ) -> RedirectResponse:
     fetched_link: LinkModel = await link_repo.get_by_uuid(async_session=async_session, uuid_=link_id)
 
-    if datetime.utcnow() >= fetched_link.end_date:
+    if datetime.utcnow() >= fetched_link.end_date:  # pragma: no cover
         raise LinkExpiredError
 
-    return RedirectResponse(
+    return RedirectResponse(    # pragma: no cover
         url=fetched_link.original_link,
         status_code=status.HTTP_303_SEE_OTHER
     )

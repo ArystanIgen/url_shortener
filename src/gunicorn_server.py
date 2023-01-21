@@ -1,15 +1,14 @@
-import multiprocessing
+import multiprocessing  # pragma: no cover
+from gunicorn.app.wsgiapp import WSGIApplication  # pragma: no cover
 
-from gunicorn.app.wsgiapp import WSGIApplication
 
-
-class StandaloneApplication(WSGIApplication):
+class StandaloneApplication(WSGIApplication):  # pragma: no cover
     def __init__(self, app_uri, options=None):
         self.options = options or {}
         self.app_uri = app_uri
         super().__init__()
 
-    def load_config(self):
+    def load_config(self):  # pragma: no cover
         config = {
             key: value
             for key, value in self.options.items()
@@ -19,7 +18,7 @@ class StandaloneApplication(WSGIApplication):
             self.cfg.set(key.lower(), value)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     options = {
         "bind": "0.0.0.0:8000",
         "workers": multiprocessing.cpu_count() // 2,

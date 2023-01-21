@@ -1,38 +1,50 @@
-# Standard Library
-from typing import Iterator
+import asyncio
 
-from fastapi.testclient import TestClient
-from pytest import fixture
-from sqlalchemy import create_engine
-from sqlalchemy.engine import Engine
-from sqlalchemy.orm import Session
-from sqlalchemy_utils import create_database, database_exists, drop_database
+from typing import Generator
 
-from app.core.config import CONFIG
+import pytest
+import pytest_asyncio
+from httpx import AsyncClient
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.db.session import async_engine
 from app.db.base import BaseModel
-# App Imports
+from app.core.config import CONFIG
 from app.main import main_app
 from app.tests.functional.fixtures import *  # noqa
-from app.tests.test_db import get_session
 from app.tests.unit.fixtures import *  # noqa
 
 
-@fixture(scope="function")
-def session() -> Iterator[Session]:
-    db_engine = create_engine('sqlite:///./test.db', connect_args={'check_same_thread': False})
-    connection = db_engine.connect()
-    BaseModel.metadata.create_all(bind=db_engine)
-    session = Session(bind=db_engine)
-    yield session
-    session.close()
-    BaseModel.metadata.drop_all(bind=db_engine)
-    connection.close()   # pragma: no cover
+@pytest.fixture(scope="session")
+def event_loop(request) -> Generator:  # noqa: indirect usage
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
 
 
-@fixture(scope="function")
-def client(session: Iterator[Session]) -> TestClient:
-    def _get_db_override() -> Iterator[Session]:
-        return session  # pragma: no cover
+@pytest_asyncio.fixture
+async def async_client():
+    async with AsyncClient(
+            app=main_app,
+            base_url=CONFIG.api.host
+    ) as client:
+        yield client
 
-    main_app.dependency_overrides[get_session] = _get_db_override
-    return TestClient(main_app)
+
+@pytest_asyncio.fixture(scope="function")
+async def async_session() -> AsyncSession:
+    session = sessionmaker(
+        async_engine, class_=AsyncSession, expire_on_commit=False
+    )
+
+    async with session() as s:
+        async with async_engine.begin() as conn:
+            await conn.run_sync(BaseModel.metadata.create_all)
+
+        yield s
+
+    async with async_engine.begin() as conn:
+        await conn.run_sync(BaseModel.metadata.drop_all)
+
+    await async_engine.dispose()

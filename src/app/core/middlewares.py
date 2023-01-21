@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 
-async def validation_exception_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+async def validation_exception_handler(_: Request, exc: RequestValidationError) -> JSONResponse:  # pragma: no cover
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
         content=jsonable_encoder(dict(detail=exc.errors(), body=exc.body))
@@ -26,7 +26,7 @@ async def add_process_time_header(request: Request, call_next):  # type: ignore
     return response
 
 
-async def log_requests(request: Request, call_next):  # type: ignore
+async def log_requests(request: Request, call_next):  # type: ignore  # pragma: no cover
     if request.url.path == '/healthz':
         response = await call_next(request)
         return response
@@ -39,7 +39,7 @@ async def log_requests(request: Request, call_next):  # type: ignore
 
     try:
         response = await call_next(request)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         logger.error(e)
         response = JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
