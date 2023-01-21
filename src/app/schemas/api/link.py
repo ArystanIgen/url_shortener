@@ -1,9 +1,10 @@
 from datetime import datetime
 from typing import Any, Dict
-from pydantic import Field, BaseModel, HttpUrl, root_validator, PositiveInt
-from pydantic.utils import GetterDict
-from app.core.config import CONFIG
 
+from pydantic import BaseModel, Field, HttpUrl, PositiveInt, root_validator
+from pydantic.utils import GetterDict
+
+from app.core.config import CONFIG
 from app.schemas.enums import DateCategoryEnum
 
 

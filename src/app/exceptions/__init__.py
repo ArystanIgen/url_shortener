@@ -1,3 +1,1 @@
-from .api import (LinkExpiredError,
-                  LinkNotFoundError,
-                  InvalidIntervalError)
+from .api import InvalidIntervalError, LinkExpiredError, LinkNotFoundError

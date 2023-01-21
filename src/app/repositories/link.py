@@ -1,16 +1,12 @@
 from typing import Any, Optional
 
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exceptions import LinkNotFoundError
 from app.models import LinkModel
 from app.repositories.base import BaseRepository
-from app.schemas import (
-    LinkCreate,
-    LinkUpdate,
-)
+from app.schemas import LinkCreate, LinkUpdate
 
 
 class LinkRepository(

@@ -1,2 +1,2 @@
-from .base import StrEnum, BaseEnum
+from .base import BaseEnum, StrEnum
 from .period import DateCategoryEnum

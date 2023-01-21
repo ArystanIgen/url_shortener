@@ -1,11 +1,11 @@
 # Standard Library
+import asyncio
 import os
 import sys
-import asyncio
 from logging.config import fileConfig
 
 import sqlalchemy_utils  # noqa
-from sqlalchemy import pool, engine_from_config
+from sqlalchemy import engine_from_config, pool
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 # App Imports
@@ -22,9 +22,9 @@ fileConfig(config.config_file_name)
 
 sys.path = ['', '..'] + sys.path[1:]
 
+from app.db.base import BaseModel
 # App Imports
 from app.models import *  # noqa
-from app.db.base import BaseModel
 
 target_metadata = [
     BaseModel.metadata

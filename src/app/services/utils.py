@@ -1,7 +1,9 @@
-from app.schemas.enums import DateCategoryEnum
-from app.exceptions import InvalidIntervalError
 from datetime import datetime, timedelta
+
 from dateutil.relativedelta import relativedelta
+
+from app.exceptions import InvalidIntervalError
+from app.schemas.enums import DateCategoryEnum
 
 
 def set_end_date(date_quantity: int, date_category: str) -> datetime:

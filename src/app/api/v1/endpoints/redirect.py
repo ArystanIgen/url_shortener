@@ -1,23 +1,16 @@
 # Standard Library
 import logging
 from datetime import datetime
-from fastapi import (
-    Depends,
-    APIRouter,
-    status
-)
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import (
-    get_session,
-    get_link_repo,
-)
-# App Imports
-from app.exceptions import LinkExpiredError,LinkNotFoundError
-from app.models import LinkModel
-from app.repositories import LinkRepository
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.responses import RedirectResponse
 
+from app.api.deps import get_link_repo, get_session
+# App Imports
+from app.exceptions import LinkExpiredError, LinkNotFoundError
+from app.models import LinkModel
+from app.repositories import LinkRepository
 
 logger = logging.getLogger(__name__)
 
@@ -26,9 +19,9 @@ router = APIRouter()
 
 @router.get(
     '/{link_id}',
-    summary='CreateShortenedLink',
-    description='Создание нового сокращенной ссылки',
-    operation_id='CreateShortenedLink',
+    summary='RedirectToOriginalLink',
+    description='Перенаправление на оригнальную ссылку',
+    operation_id='RedirectToOriginalLink',
     include_in_schema=False
 )
 async def redirect_to_original_link(

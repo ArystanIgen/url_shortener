@@ -1,10 +1,10 @@
 # Standard Library
 import logging
-from typing import Any, List, Type, Generic, TypeVar, Optional
+from typing import Any, Generic, List, Optional, Type, TypeVar
 
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import delete, select
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # App Imports

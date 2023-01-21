@@ -4,5 +4,5 @@ router = APIRouter()
 
 
 @router.get('')
-def health_check() -> None:   # pragma: no cover # Todo: add tests
+def health_check() -> None:   # pragma: no cover
     ...

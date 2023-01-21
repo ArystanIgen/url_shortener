@@ -1,5 +1,7 @@
 from datetime import datetime
-from pydantic import Field, BaseModel, HttpUrl, PositiveInt
+
+from pydantic import BaseModel, Field, HttpUrl, PositiveInt
+
 from app.schemas.enums import DateCategoryEnum
 
 

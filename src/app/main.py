@@ -8,11 +8,12 @@ from fastapi.middleware.gzip import GZipMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.api.v1.api import api_router
-from app.core.config import CONFIG
-from app.exceptions.api import APIError, api_error_handler
-from app.core.middlewares import log_requests, add_process_time_header, validation_exception_handler
 from app.api.v1.endpoints.healthz import router as health_router
 from app.api.v1.endpoints.redirect import router as redirect_router
+from app.core.config import CONFIG
+from app.core.middlewares import (add_process_time_header, log_requests,
+                                  validation_exception_handler)
+from app.exceptions.api import APIError, api_error_handler
 
 logger = logging.getLogger(__name__)
 
