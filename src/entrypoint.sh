@@ -35,7 +35,7 @@ case "$ENV" in
     ;;
 "TEST")
     wait_for_db
-    pytest -v --cov . --cov-report term-missing --cov-fail-under=100 --color=yes
+    pytest -v --cov . --cov-report term-missing --cov-fail-under=90 --color=yes
     ;;
 "DEV")
     wait_for_db

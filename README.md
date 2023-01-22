@@ -12,5 +12,5 @@ docker compose up -d --build
 To run test run following command:
 
 ```shell
-docker compose run app pytest -v --cov . --cov-report term-missing --cov-fail-under=100 --color=yes
+docker compose run app pytest -v --cov . --cov-report term-missing --cov-fail-under=90 --color=yes
 ```

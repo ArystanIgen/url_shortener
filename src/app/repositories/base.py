@@ -29,7 +29,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         *,
         skip: int = 0,
         limit: int = 100
-    ) -> List[ModelType]:  # pragma: no cover
+    ) -> List[ModelType]:
         stmt = select(self.model).order_by(self.model.id).offset(skip).limit(limit)
         query = await async_session.execute(stmt)
         return query.scalars.all()
@@ -39,7 +39,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         async_session: AsyncSession,
         *,
         obj_in: CreateSchemaType
-    ) -> Optional[ModelType]:  # noqa # pragma: no cover
+    ) -> Optional[ModelType]:  # noqa
         try:
             obj_in_data = jsonable_encoder(obj_in)
             db_obj = self.model(**obj_in_data)  # type: ignore
@@ -58,7 +58,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         *,
         instance: ModelType,
         obj_update: UpdateSchemaType
-    ) -> Optional[ModelType]:  # pragma: no cover
+    ) -> Optional[ModelType]:
         update_data = obj_update.dict(exclude_unset=True)
         for key, value in update_data.items():
             setattr(instance, key, value) if value else None
@@ -70,7 +70,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         async_session: AsyncSession,
         *,
         id_: int
-    ) -> Optional[ModelType]:  # pragma: no cover
+    ) -> Optional[ModelType]:
         query = delete(self.model).where(self.model.id == id_)
         await async_session.execute(query)
         return None

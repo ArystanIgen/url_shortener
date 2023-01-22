@@ -12,7 +12,7 @@ from app.schemas.enums import StrEnum
 class Code(StrEnum):
     LinkNotFound = "LinkNotFound"
     LinkExpiredError = "LinkExpiredError"
-    InvalidIntervalError = "InvalidIntervalError"
+    InvalidExpirationDate = "InvalidExpirationDate"
 
 
 class APIError(Exception):
@@ -55,10 +55,10 @@ class LinkExpiredError(APIError):
         )
 
 
-class InvalidIntervalError(APIError):  # pragma: no cover
+class InvalidExpirationDateError(APIError):  # pragma: no cover
     def __init__(self) -> None:
         super().__init__(
-            code=Code.InvalidIntervalError,
-            message='Неверно задан интервал.',
+            code=Code.InvalidExpirationDate,
+            message='Неверный срок действия',
             status_code=status.HTTP_400_BAD_REQUEST
         )

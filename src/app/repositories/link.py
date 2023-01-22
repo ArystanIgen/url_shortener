@@ -31,7 +31,7 @@ class LinkRepository(
         async_session: AsyncSession,
         *,
         uuid_: Any
-    ) -> Optional[LinkModel]:  # noqa  # pragma: no cover
+    ) -> Optional[LinkModel]:  # noqa
         stmt = select(self.model).where(self.model.uuid == uuid_)
         query = await async_session.execute(stmt)
         query = query.scalar()
