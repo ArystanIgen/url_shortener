@@ -6,7 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 @pytest.mark.asyncio
 async def test_create_shortened_link_with_status_201(
         async_client: AsyncClient,
-        async_session: AsyncSession,
         mock_original_link: str
 ):
     response = await async_client.post("/v1/link", json={

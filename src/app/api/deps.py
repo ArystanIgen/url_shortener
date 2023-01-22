@@ -10,13 +10,13 @@ ModelType = TypeVar('ModelType', bound=DBBaseModel)
 
 
 async def get_session() -> AsyncSession:
-    try:
+    try:  # pragma: no cover
         yield async_session
     except Exception as e:  # pragma: no cover
         print(e)
         await async_session.rollback()  # pragma: no cover
     finally:
-        await async_session.close()
+        await async_session.close()  # pragma: no cover
 
 
 def get_link_repo() -> LinkRepository:

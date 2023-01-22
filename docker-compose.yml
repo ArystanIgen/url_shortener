@@ -21,14 +21,5 @@ services:
       - .env
     depends_on:
       - db
-    networks:
-      - default
-      - common-net
     ports:
       - 9070:8000
-
-networks:
-  default:
-    driver: bridge
-  common-net:
-    external: true

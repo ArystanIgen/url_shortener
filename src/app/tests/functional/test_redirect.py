@@ -16,8 +16,7 @@ async def test_redirect_with_status_303(
 
 @pytest.mark.asyncio
 async def test_redirect_with_status_404(
-        async_client: AsyncClient,
-        async_session: AsyncSession,
+        async_client: AsyncClient
 ):
     response = await async_client.get("/1234567890")
 
